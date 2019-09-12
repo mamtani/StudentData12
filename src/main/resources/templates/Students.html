@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tag for Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    <script th:src="@{/js/main.js}" src="../static/js/main.js"></script>
+    <title>Index</title>
+</head>
+<body>
+<header>
+    <div th:replace="Home :: HeaderBar">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+            <div class="container">
+                <a href="Home.html" class="navbar-brand">Student Data</a>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h1 class="my-4">Index</h1>
+    </div>
+</header>
+<main role="main" class="container">
+    <ul class="nav flex-column">
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+            <a th:href="@{AddStudent.do}" href="AddStudent.html"
+               class="nav-link"><i class="fas fa-plus"></i>&nbsp;Add Student</a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{ListStudents.do}" href="ListStudents.html"
+               class="nav-link"><i class="fas fa-th-list"></i>&nbsp;List Students</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+            <a th:href="@{/users/}" href="Users.html"
+               class="nav-link"><i class="far fa-user"></i>&nbsp;Users</a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/password/ChangePassword.do}" href="ChangePassword.html"
+               class="nav-link"><i class="fas fa-lock"></i>&nbsp;Change Password</a>
+        </li>
+        <li class="nav-item">
+            <a href="Home.html" th:href="@{/Logout.do}"
+               class="nav-link"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

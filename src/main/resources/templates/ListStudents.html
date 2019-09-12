@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--/*@thymesVar id="students" type="java.util.ArrayList<ca.javateacher.studentdata.model.StudentForm>"*/-->
+<!--/*@thymesVar id="s" type="ca.javateacher.studentdata.model.StudentForm"*/-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tag for Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    <script th:src="@{/js/main.js}" src="../static/js/main.js"></script>
+    <title>List All</title>
+</head>
+<body>
+<header>
+    <div th:replace="Home :: HeaderBar">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+            <div class="container">
+                <a href="Home.html" class="navbar-brand">Student Data</a>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h1 class="my-4">Student List</h1>
+    </div>
+</header>
+<main role="main" class="container">
+    <p th:if="${#lists.isEmpty(students)}" class="alert alert-info">No student data</p>
+    <table th:unless="${#lists.isEmpty(students)}" class="table table-bordered table-striped mb-4">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Count</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s,c: ${students}">
+                <th th:text="${c.count}" scope="row" class="align-middle">1</th>
+                <td th:text="${s.firstName}" class="align-middle">Bart</td>
+                <td th:text="${s.lastName}" class="align-middle">Simpson</td>
+                <td>
+                    <ul class="nav justify-content-center">
+                        <li class="nav-item">
+                            <a th:href="@{StudentDetails.do(id=${s.id})}" href="StudentDetails.html" class="nav-link"><i class="fas fa-info-circle"></i>&nbsp;Info</a>
+                        </li>
+                        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                            <a th:href="@{EditStudent.do(id=${s.id})}" href="EditStudent.html" class="nav-link"><i class="fas fa-edit"></i>&nbsp;Edit</a>
+                        </li>
+                        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                            <a th:href="@{DeleteStudent.do(id=${s.id})}" href="DeleteStudent.html" class="nav-link"><i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p sec:authorize="hasRole('ADMIN')" class="mt-2">
+        <a th:href="@{DeleteAll.do}" href="ListStudents.html"
+           class="btn btn-danger"><i class="fas fa-trash-alt"></i>&nbsp;Delete All</a>
+    </p>
+</main>
+</body>
+</html>

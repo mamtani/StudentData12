@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--/*@thymesVar id="student" type="ca.javateacher.studentdata.model.StudentForm"*/-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tag for Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    <script th:src="@{/js/main.js}" src="../static/js/main.js"></script>
+    <title>Student Details</title>
+</head>
+<body>
+<header>
+    <div th:replace="Home :: HeaderBar">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+            <div class="container">
+                <a href="Home.html" class="navbar-brand">Student Data</a>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h1 class="my-4">Student Details</h1>
+    </div>
+</header>
+<main role="main" class="container">
+    <div th:object="${student}" class="card">
+        <div class="card-header">
+            Student Record
+        </div>
+        <div class="card-body">
+            <p>
+                <label class="output-label">First Name:</label>
+                <span th:text="*{firstName}" class="output">Bart</span>
+            </p>
+            <p>
+                <label class="output-label">Last Name:</label>
+                <span th:text="*{lastName}" class="output">Simpson</span>
+            </p>
+            <p>
+                <label class="output-label">Program:</label>
+                <span th:text="*{programName}" class="output">Computer Programmer</span>
+            </p>
+            <p>
+                <label class="output-label">Year:</label>
+                <span th:text="*{programYear}" class="output">1</span>
+            </p>
+            <p>
+                <label class="output-label">Co-op:</label>
+                <span th:text="*{programCoop}" class="output">yes</span>
+            </p>
+            <p>
+                <label class="output-label">Internship:</label>
+                <span th:text="*{programInternship}" class="output">no</span>
+            </p>
+        </div>
+        <div class="card-footer">
+            <div class="btn-group">
+                <a sec:authorize="hasRole('ADMIN')"
+                   th:href="@{EditStudent.do(id=*{id})}" href="EditStudent.html"
+                   class="btn btn-warning"><i class="fas fa-edit"></i>&nbsp;Edit Record</a>
+                <a th:href="@{ListStudents.do}" href="ListStudents.html"
+                   class="btn btn-primary"><i class="fas fa-th-list"></i>&nbsp;List Students</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="users" type="java.util.List<java.lang.String>"*/-->
+<!--/*@thymesVar id="admins" type="java.util.List<java.lang.String>"*/-->
+<!--/*@thymesVar id="you" type="java.util.List<java.lang.String>"*/-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tag for Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    <script th:src="@{/js/main.js}" src="../static/js/main.js"></script>
+    <title>List Users</title>
+</head>
+<body>
+<header>
+    <div th:replace="Home :: HeaderBar">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+            <div class="container">
+                <a href="Home.html" class="navbar-brand">Student Data</a>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h1 class="my-4">User List</h1>
+    </div>
+</header>
+
+<main role="main" class="container">
+    <h2>Role: User</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p th:if="${#lists.isEmpty(users)}" class="alert alert-info">No user accounts yet.</p>
+            <table th:unless="${#lists.isEmpty(users)}" class="table table-bordered table-hover mb-4">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">Count</th>
+                        <th scope="col">Login</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u,c:${users}">
+                        <th th:text="${c.count}" scope="row">1</th>
+                        <td th:text="${u}">bart</td>
+                        <td><a th:href="@{DeleteUser.do(login=${u})}"
+                               href="DeleteUser.html"><i class="fas fa-user-minus"></i>&nbsp;Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2>Role: Admin</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="table-primary">
+                    <th scope="col">Count</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="a,c:${admins}">
+                        <th th:text="${c.count}" scope="row">1</th>
+                        <td th:text="${a}">marge</td>
+                        <td>
+                            <a th:unless="${#strings.equals(a, you)}" th:href="@{DeleteUser.do(login=${a})}"
+                               href="DeleteUser.html"><i class="fas fa-user-minus"></i>&nbsp;Delete</a>
+                            <span th:if="${#strings.equals(a, you)}" class="message">You</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4 row">
+        <div class="col-md-6">
+            <a th:href="@{AddUser.do}" href="AddUser.html"
+               class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;Add User</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
